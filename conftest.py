@@ -10,7 +10,12 @@ def test_setup(request):
     if browser == "firefox":
         driver = webdriver.Firefox()
     elif browser == "chrome":
-        driver = webdriver.Chrome()
+
+        PROXY = "localhost:1231"  # IP:PORT or HOST:PORT
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('--proxy-server=http://%s' % PROXY)
+        driver = webdriver.Chrome(chrome_options=chrome_options)
+
     elif browser == "Ie":
         driver = webdriver.Ie()
 
@@ -20,3 +25,5 @@ def test_setup(request):
     request.cls.driver = driver
     yield
     driver.quit()
+
+
